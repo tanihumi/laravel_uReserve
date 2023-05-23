@@ -55,19 +55,30 @@
               </div>
 
               <div>
-                <x-label for="reserved_people" value="予約人数" />
-                <select name="reserved_people">
-                  @for ($i = 1; $i <= $reservablePeople; $i++) <option value="{{$i}}">{{$i}}</option>
-                    @endfor
+                @if ($reservablePeople <= 0) <spna class="tet-xs text-red-500">このイベントは満員です。</span>
+                  @else
+                  <x-label for="reserved_people" value="予約人数" />
+                  <select name="reserved_people">
+                    @for ($i = 1; $i <= $reservablePeople; $i++) <option value="{{$i}}">{{$i}}</option>
+                      @endfor
 
-                </select>
+                  </select>
+                  @endif
               </div>
 
+              @if($isReserved === null)
+
               <input type="hidden" name="id" value="{{ $event->id }}">
+              @if ($reservablePeople > 0)
               <x-button class="ml-4">
                 予約する
               </x-button>
-              
+              @endif
+
+              @else
+              このイベントは予約済です。
+              @endif
+
             </div>
 
         </div>
